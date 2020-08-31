@@ -18,6 +18,11 @@ const config = convict({
     format: 'port',
     default: process.env.PORT,
     env: 'PORT'
+  },
+  DB_URL: {
+    doc: 'Mongodb url',
+    env: 'DB_URL',
+    default: process.env.DB_URL
   }
 })
 
