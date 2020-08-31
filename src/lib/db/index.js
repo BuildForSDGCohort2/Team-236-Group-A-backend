@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 
 const mongoose = require("mongoose");
 const config = require("../../config");
-const logger = require("../logger")
+const logger = require("../logger");
 
 const connectDb = () => {
   return mongoose
@@ -16,4 +16,4 @@ const connectDb = () => {
     });
 };
 
-module.exports ={ connectDb}
+module.exports = { connectDb };
