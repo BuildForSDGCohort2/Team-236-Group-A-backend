@@ -1,19 +1,19 @@
-"use strict"
+"use strict";
 
-const  mongoose = require('mongoose')
-const config = require("../config")
+const mongoose = require("mongoose");
+const config = require("../config");
 // import logger from '../logger'
 
- const connectDb = () => {
+const connectDb = () => {
   return mongoose
-    .connect(config.get('DB_URL'), {
+    .connect(config.get("DB_URL"), {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useCreateIndex: true
+      useCreateIndex: true,
     })
     .then(() => {
-     console.log('db connected successfully')
-    })
-}
+      console.log("db connected successfully");
+    });
+};
 
-module.exports = {connectDb}
+module.exports = { connectDb };
