@@ -5,6 +5,14 @@ const joi = require("joi");
 const errors = require("./errors");
 const config = require("../config");
 
+
+const required = (data) => {
+    throw errors.throwError({
+      name: errors.MissingFunctionParamError,
+      message: `${data} is required`,
+    });
+  };
+  
 const generateJwt = (payload, expiresIn = "10days", algorithm = "HS512") => {
   return jsonWebToken.sign(payload, config.get("APP_KEY"), {
     expiresIn,
@@ -18,13 +26,6 @@ const decodeJwt = (token = required("token")) => {
       if (err) return reject(err);
       resolve(decoded);
     });
-  });
-};
-
-const required = (data) => {
-  throw errors.throwError({
-    name: errors.MissingFunctionParamError,
-    message: `${data} is required`,
   });
 };
 
