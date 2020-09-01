@@ -23,7 +23,9 @@ const generateJwt = (payload, expiresIn = "10days", algorithm = "HS512") => {
 const decodeJwt = (token = required("token")) => {
   return new Promise((resolve, reject) => {
     jsonWebToken.verify(token, config.get("APP_KEY"), (err, decoded) => {
-      if (err) return reject(err);
+      if (err) {
+        return reject(err);
+      }
       resolve(decoded);
     });
   });

@@ -1,9 +1,13 @@
 "use strict";
 const convict = require("convict");
 
-if (!process.env.NODE_ENV) process.env.NODE_ENV = "development";
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = "development";
+}
 
-if (process.env.NODE_ENV === "development") require("dotenv").config();
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config();
+}
 
 convict.addFormat(require("convict-format-with-validator").url);
 

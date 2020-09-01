@@ -19,7 +19,9 @@ function customError({
   error.name = name;
   error.code = code;
 
-  if (Error.captureStackTrace) Error.captureStackTrace(error, customError);
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(error, customError);
+  }
 
   Object.defineProperties(error, {
     [ERROR_MESSAGE]: {
