@@ -17,7 +17,7 @@ function customError({
 }) {
   const error = new Error(message);
   error.name = name;
-  error.code = code;
+  error.status = code;
 
   if (Error.captureStackTrace) Error.captureStackTrace(error, customError);
 

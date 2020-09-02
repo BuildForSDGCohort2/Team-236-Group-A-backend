@@ -33,7 +33,7 @@ const validate = curry((schema, data) => {
   const { error, value } = schema.validate(data, { stripUnknown: true });
   if (error) {
     throw errors.throwError({
-      name: errors.ValidationError,
+      name: "ValidationError",
       message: error.message
     });
   }
