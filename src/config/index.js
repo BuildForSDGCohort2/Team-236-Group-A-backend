@@ -20,7 +20,7 @@ const config = convict({
   PORT: {
     doc: "The port to bind.",
     format: "port",
-    default: process.env.PORT,
+    default: process.env.PORT || 3000,
     env: "PORT",
   },
   DB_URL: {

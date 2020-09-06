@@ -5,14 +5,13 @@ const joi = require("joi");
 const errors = require("./errors");
 const config = require("../config");
 
-
 const required = (data) => {
-    throw errors.throwError({
-      name: errors.MissingFunctionParamError,
-      message: `${data} is required`,
-    });
-  };
-  
+  throw errors.throwError({
+    name: errors.MissingFunctionParamError,
+    message: `${data} is required`,
+  });
+};
+
 const generateJwt = (payload, expiresIn = "10days", algorithm = "HS512") => {
   return jsonWebToken.sign(payload, config.get("APP_KEY"), {
     expiresIn,
@@ -36,15 +35,28 @@ const validate = curry((schema, data) => {
   if (error) {
     throw errors.throwError({
       name: "ValidationError",
-      message: error.message
+      message: error.message,
     });
   }
   return value;
 });
 
+const sanitize = (obj, ...keys) => {
+  keys.forEach((key) => {
+    delete obj[key];
+  });
+  return obj;
+};
 
 const objectId = () => {
   return joi.string().regex(/^[0-9a-fA-F]{24}$/);
 };
 
-module.exports = { validate, generateJwt, decodeJwt, required, objectId };
+module.exports = {
+  validate,
+  generateJwt,
+  decodeJwt,
+  required,
+  objectId,
+  sanitize,
+};

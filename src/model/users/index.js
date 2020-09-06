@@ -10,7 +10,7 @@ function getAll() {
   return UserBaseModel.findAll({ query: {}, populate: [] });
 }
 
-function getById(ii = required("id")) {
+function getById(id = required("id")) {
   return UserBaseModel.get({ _id: id });
 }
 

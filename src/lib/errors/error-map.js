@@ -17,4 +17,5 @@ module.exports = {
   ResourceAlreadyExists: httpstatus.BAD_REQUEST,
   ResourceDoesNotExists: httpstatus.BAD_REQUEST,
   ValidationError: httpstatus.BAD_REQUEST,
+  
 };
