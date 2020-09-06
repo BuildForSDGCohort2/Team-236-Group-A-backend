@@ -36,6 +36,7 @@ const validate = curry((schema, data) => {
     throw errors.throwError({
       name: "ValidationError",
       message: error.message,
+      code: 400,
     });
   }
   return value;
