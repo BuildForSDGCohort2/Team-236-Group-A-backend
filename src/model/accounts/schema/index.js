@@ -1,6 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
-const { string } = require("joi");
+const { string, required } = require("joi");
 
 const schema = new mongoose.Schema(
   {
@@ -16,7 +16,11 @@ const schema = new mongoose.Schema(
     },
     role: {
       type: String,
-      // required:true
+    },
+    verified: {
+      type: String,
+      default: false,
+      required: true,
     },
     password: {
       type: String,

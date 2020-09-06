@@ -1,14 +1,14 @@
 "use strict";
-const UserModel = require("../../model/users")();
+const AccountModel = require("../../model/accounts")();
 const bcrypt = require("bcrypt");
 const { throwError } = require("../../lib/errors");
 const { sanitize } = require("../../lib/utils");
 
 async function signUp({ username, email, password }) {
-  const checkUserExist = await UserModel.find({
+  const userExist = await AccountModel.get({
     query: { $or: [{ username }, { email }] },
   });
-  if (checkUserExist.length > 0) {
+  if (userExist) {
     throw throwError({
       name: "ResourceAlreadyExists",
       message: "Email or username already taken",
@@ -17,11 +17,11 @@ async function signUp({ username, email, password }) {
   }
   const hash = bcrypt.hashSync(password, 10);
 
-  const user = await UserModel.create({
+  const account = await AccountModel.create({
     data: { email, username, password: hash },
   });
 
-  return sanitize(user, "_id", "password", "_v");
+  return sanitize(account, "_id", "password", "__v");
 }
 
 module.exports = signUp;

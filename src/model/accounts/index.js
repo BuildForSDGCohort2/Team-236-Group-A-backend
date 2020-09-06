@@ -2,22 +2,22 @@
 const mongoose = require("mongoose");
 const schema = require("./schema");
 const BaseModel = require("../common/base-model");
-const Model = mongoose.model("users", schema);
+const Model = mongoose.model("accounts", schema);
 
-const UserBaseModel = BaseModel(Model);
+const AccountBaseModel = BaseModel(Model);
 
 function getAll() {
-  return UserBaseModel.findAll({ query: {}, populate: [] });
+  return AccountBaseModel.findAll({ query: {}, populate: [] });
 }
 
 function getById(id = required("id")) {
-  return UserBaseModel.get({ _id: id });
+  return AccountBaseModel.get({ _id: id });
 }
 
 module.exports = function () {
   return {
-    ...UserBaseModel,
+    ...AccountBaseModel,
     getAll,
     getById,
   };
-}
+};

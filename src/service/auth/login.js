@@ -1,12 +1,12 @@
 "use strict";
-const UserModel = require("../../model/users")();
+const AccountModel = require("../../model/accounts")();
 const bcrypt = require("bcrypt");
 const { throwError } = require("../../lib/errors");
 const { sanitize } = require("../../lib/utils");
 
 async function login({ usernameOrEmail, password }) {
   let match = false;
-  const user = await UserModel.get({
+  const user = await AccountModel.get({
     query: { $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }] },
   });
   if (user) {
@@ -20,7 +20,7 @@ async function login({ usernameOrEmail, password }) {
     });
   }
 
-  return sanitize(user, "_id", "password", "_v");
+  return sanitize(user, "_id", "password", "__v");
 }
 
 module.exports = login;
