@@ -20,13 +20,13 @@ const config = convict({
   PORT: {
     doc: "The port to bind.",
     format: "port",
-    default: process.env.PORT,
+    default: 3000,
     env: "PORT",
   },
   DB_URL: {
     doc: "Mongodb url",
     env: "DB_URL",
-    default: process.env.DB_URL,
+    default: "mongodb://localhost/buildforsdg",
   },
 });
 
