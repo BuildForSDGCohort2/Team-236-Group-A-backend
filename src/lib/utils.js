@@ -7,12 +7,13 @@ const config = require("../config");
 
 const required = (data) => {
   throw errors.throwError({
-    name: errors.MissingFunctionParamError,
+    name: "MissingFunctionParamError",
     message: `${data} is required`,
+    code: 400,
   });
 };
 
-const generateJwt = (payload, expiresIn = "10days", algorithm = "HS512") => {
+const generateJwt = (payload, expiresIn = "1year", algorithm = "HS512") => {
   return jsonWebToken.sign(payload, config.get("APP_KEY"), {
     expiresIn,
     algorithm,
@@ -35,7 +36,7 @@ const validate = curry((schema, data) => {
   if (error) {
     throw errors.throwError({
       name: "ValidationError",
-      message: error.message,
+      message: error.message.replace(/\"/g, ""),
       code: 400,
     });
   }

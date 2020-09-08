@@ -2,15 +2,15 @@
 const AccountModel = require("../../model/accounts")();
 const bcrypt = require("bcrypt");
 const { throwError } = require("../../lib/errors");
-const { sanitize } = require("../../lib/utils");
+const { sanitize, generateJwt } = require("../../lib/utils");
 
 async function login({ usernameOrEmail, password }) {
   let match = false;
-  const user = await AccountModel.get({
+  const account = await AccountModel.get({
     query: { $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }] },
   });
-  if (user) {
-    match = bcrypt.compareSync(password, user.password);
+  if (account) {
+    match = bcrypt.compareSync(password, account.password);
   }
   if (!match) {
     throw throwError({
@@ -20,7 +20,9 @@ async function login({ usernameOrEmail, password }) {
     });
   }
 
-  return sanitize(user, "_id", "password", "__v");
+  const token = generateJwt({ accountId: account.id });
+
+  return sanitize({ ...account, token }, "_id", "password", "__v");
 }
 
 module.exports = login;

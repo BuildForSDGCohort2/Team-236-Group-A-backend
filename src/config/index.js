@@ -28,6 +28,11 @@ const config = convict({
     env: "DB_URL",
     default: "mongodb://localhost/buildforsdg",
   },
+  APP_KEY: {
+    doc: "Application Encryption key",
+    env: "APP_KEY",
+    default: "sudhfhefui3brijkdsbfsdfuefuwi3kjbehdsjkfbsdf",
+  },
 });
 
 config.validate({ allowed: "strict" });
