@@ -2,7 +2,7 @@
 const AccountModel = require("../../model/accounts")();
 const bcrypt = require("bcrypt");
 const { throwError } = require("../../lib/errors");
-const { sanitize } = require("../../lib/utils");
+const { sanitize, generateJwt } = require("../../lib/utils");
 
 async function signUp({ username, email, password }) {
   const userExist = await AccountModel.get({
@@ -20,8 +20,9 @@ async function signUp({ username, email, password }) {
   const account = await AccountModel.create({
     data: { email, username, password: hash },
   });
+  const token = generateJwt({ accountId: account.id });
 
-  return sanitize(account, "_id", "password", "__v");
+  return sanitize({ ...account, token }, "_id", "password", "__v");
 }
 
 module.exports = signUp;
