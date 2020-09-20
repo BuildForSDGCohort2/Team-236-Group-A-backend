@@ -8,7 +8,8 @@ const controller = require("./controller");
 const { connectDb, logger } = require("./lib");
 const { sendError } = require("./middleware/error");
 app
-  .use(bodyParser.urlencoded({ extended: false }))
+  .use(bodyParser.json({ limit: "10mb" }))
+  .use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
   .use(bodyParser.json())
   .use(cors())
   .use(controller)
