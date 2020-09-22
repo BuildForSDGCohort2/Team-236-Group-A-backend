@@ -6,7 +6,7 @@ const { decodeJwt } = require("../lib/utils");
 const authenticate = async (req, res, next) => {
   let token;
   try {
-    let bearerHeader = req.headers["authorization"];
+    const bearerHeader = req.headers["authorization"];
     token = bearerHeader.split(" ")[1];
     if (!bearerHeader) {
       message = "No authentication token provided";
