@@ -21,7 +21,7 @@ async function signUp({ username, email, password }) {
   const account = await AccountModel.create({
     data: { email, username, password: hash, role: roles.user },
   });
-  const token = generateJwt({ accountId: account.id });
+  const token = generateJwt({ accountId: account.id, role: account.role });
 
   return sanitize({ ...account, token }, "_id", "password", "__v");
 }

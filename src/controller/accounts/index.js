@@ -12,6 +12,7 @@ const {
   assignRoleSchema,
   getAccountSchema,
 } = require("./schema");
+// const { ensureAdmin } = require("../../middleware");
 
 router.get("/", async (req, res, next) => {
   try {

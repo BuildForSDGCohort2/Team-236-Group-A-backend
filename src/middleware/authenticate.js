@@ -21,7 +21,8 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
-    await decodeJwt(token);
+    const data = await decodeJwt(token);
+    req.decodedJwt = data;
     next();
   } catch (error) {
     throw errors.throwError({
