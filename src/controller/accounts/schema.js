@@ -9,6 +9,10 @@ const getAccountsSchema = joi.object({
   role: joi.string().valid(...rolesArr),
 });
 
+const getAccountSchema = joi.object({
+  accountId: objectId().required(),
+});
+
 const assignRoleSchema = joi.object({
   role: joi
     .string()
@@ -20,4 +24,5 @@ const assignRoleSchema = joi.object({
 module.exports = {
   getAccountsSchema,
   assignRoleSchema,
+  getAccountSchema,
 };
