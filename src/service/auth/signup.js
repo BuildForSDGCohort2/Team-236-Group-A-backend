@@ -3,6 +3,7 @@ const AccountModel = require("../../model/accounts")();
 const bcrypt = require("bcrypt");
 const { throwError } = require("../../lib/errors");
 const { sanitize, generateJwt } = require("../../lib/utils");
+const { roles } = require("../../model/common/constants");
 
 async function signUp({ username, email, password }) {
   const userExist = await AccountModel.get({
@@ -18,7 +19,7 @@ async function signUp({ username, email, password }) {
   const hash = bcrypt.hashSync(password, 10);
 
   const account = await AccountModel.create({
-    data: { email, username, password: hash },
+    data: { email, username, password: hash, role: roles.user },
   });
   const token = generateJwt({ accountId: account.id });
 

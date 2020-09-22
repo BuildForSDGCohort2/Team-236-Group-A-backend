@@ -27,14 +27,24 @@ const find = (Model) => async ({ query = required("query"), populate }) => {
     doc.populate(populate);
   }
 
-  return doc.lean().exec();
+  const items = await doc.exec();
+  return items.map((item) => item.toObject());
 };
 
 const findAll = (Model) => async ({ populate }) => {
   const doc = Model.find();
   if (populate) {
-    doc.populate(populate);
+    await doc.populate(populate);
   }
+
+  const items = await doc.exec();
+  return items.map((item) => item.toObject());
+};
+
+const update = (Model) => async ({ query, data }) => {
+  const doc = Model.findOneAndUpdate(query, data, {
+    new: true,
+  });
 
   const item = await doc.exec();
   return item ? item.toObject() : item;
@@ -61,6 +71,11 @@ const BaseModel = (Model) => {
      * find all document
      */
     findAll: findAll(Model),
+
+    /**
+     * update a model
+     */
+    update: update(Model),
   };
 };
 

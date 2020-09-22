@@ -1,15 +1,14 @@
 "use strict";
+const { throwError } = require("./errors");
 const { curry, reject } = require("lodash/fp");
 const jsonWebToken = require("jsonwebtoken");
 const joi = require("joi");
 const cloudinary = require("cloudinary").v2;
-const errors = require("./errors");
 const config = require("../config");
-const { throwError } = require("./errors");
 const logger = require("./logger");
 
 const required = (data) => {
-  throw errors.throwError({
+  throw throwError({
     name: "MissingFunctionParamError",
     message: `${data} is required`,
     code: 400,
@@ -37,7 +36,7 @@ const decodeJwt = (token = required("token")) => {
 const validate = curry((schema, data) => {
   const { error, value } = schema.validate(data, { stripUnknown: true });
   if (error) {
-    throw errors.throwError({
+    throw throwError({
       name: "ValidationError",
       message: error.message.replace(/\"/g, ""),
       code: 400,
@@ -47,10 +46,17 @@ const validate = curry((schema, data) => {
 });
 
 const sanitize = (obj, ...keys) => {
-  keys.forEach((key) => {
-    delete obj[key];
-  });
-  return obj;
+  const isArray = Array.isArray(obj);
+  if (isArray) {
+    const copidArr = [...obj];
+    return copidArr.map((value) => sanitize(value, ...keys));
+  } else {
+    const copiedObj = Object.assign({}, obj);
+    keys.forEach((key) => {
+      delete copiedObj[key];
+    });
+    return copiedObj;
+  }
 };
 
 const objectId = () => {

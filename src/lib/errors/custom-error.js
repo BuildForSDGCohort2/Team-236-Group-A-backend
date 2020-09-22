@@ -1,4 +1,3 @@
-
 "use strict";
 const { get } = require("lodash/fp");
 const ERROR_MESSAGE = Symbol("new error message");
@@ -13,7 +12,7 @@ const getName = get(ERROR_NAME);
 function customError({
   name = required("name"),
   message = required("message"),
-  code
+  code,
 }) {
   const error = new Error(message);
   error.name = name;
@@ -27,18 +26,18 @@ function customError({
     [ERROR_MESSAGE]: {
       get() {
         return message;
-      }
+      },
     },
     [ERROR_CODE]: {
       get() {
         return code;
-      }
+      },
     },
     [ERROR_NAME]: {
       get() {
         return name;
-      }
-    }
+      },
+    },
   });
 
   return error;
@@ -54,5 +53,5 @@ function customError({
 module.exports = Object.assign(customError, {
   getMessage,
   getCode,
-  getName
+  getName,
 });
