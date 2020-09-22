@@ -25,7 +25,6 @@ const authenticate = async (req, res, next) => {
     const data = await decodeJwt(token);
     next();
   } catch (error) {
-    console.log(error);
     throw throwError({
       name: "UnauthorizedError",
       code: 401,
