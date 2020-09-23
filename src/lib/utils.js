@@ -2,8 +2,11 @@
 const { curry, reject } = require("lodash/fp");
 const jsonWebToken = require("jsonwebtoken");
 const joi = require("joi");
+const cloudinary = require("cloudinary").v2;
 const errors = require("./errors");
 const config = require("../config");
+const { throwError } = require("./errors");
+const logger = require("./logger");
 
 const required = (data) => {
   throw errors.throwError({
@@ -54,6 +57,29 @@ const objectId = () => {
   return joi.string().regex(/^[0-9a-fA-F]{24}$/);
 };
 
+const uploadToCloudinary = (image) => {
+  return cloudinary.uploader.upload(
+    image,
+    {
+      overwrite: true,
+      invalidate: true,
+      // width: 810, height: 456, crop: "fill"
+    },
+    async function (error, result) {
+      logger().error(error);
+      if (error) {
+        throw throwError({
+          name: "ImageUploadError",
+          code: 400,
+          message: "Error occurred while uploading image",
+        });
+      }
+
+      return result;
+    }
+  );
+};
+
 module.exports = {
   validate,
   generateJwt,
@@ -61,4 +87,5 @@ module.exports = {
   required,
   objectId,
   sanitize,
+  uploadToCloudinary,
 };
