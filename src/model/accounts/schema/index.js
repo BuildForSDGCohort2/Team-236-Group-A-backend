@@ -1,6 +1,7 @@
 "use strict";
 const mongoose = require("mongoose");
 const { string, required } = require("joi");
+const { roles } = require("../../common/constants");
 
 const schema = new mongoose.Schema(
   {
@@ -16,6 +17,8 @@ const schema = new mongoose.Schema(
     },
     role: {
       type: String,
+      default: roles.user,
+      enum: Object.values(roles),
     },
     verified: {
       type: String,

@@ -1,6 +1,5 @@
 "use strict";
 const ClassificationModel = require("../../model/classification")();
-const { throwError } = require("../../lib/errors");
 const { sanitize, uploadToCloudinary } = require("../../lib/utils");
 
 async function addClassifcation(data, image) {

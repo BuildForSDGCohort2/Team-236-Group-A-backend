@@ -20,7 +20,7 @@ async function login({ usernameOrEmail, password }) {
     });
   }
 
-  const token = generateJwt({ accountId: account.id });
+  const token = generateJwt({ accountId: account.id, role: account.role });
 
   return sanitize({ ...account, token }, "_id", "password", "__v");
 }

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
-const { throwError } = require("../lib/errors");
 const { decodeJwt } = require("../lib/utils");
+const errors = require("../lib/errors");
 
 const authenticate = async (req, res, next) => {
   let token;
@@ -13,19 +13,19 @@ const authenticate = async (req, res, next) => {
       throw new Error(message);
     }
   } catch (error) {
-    throw throwError({
+    throw errors.throwError({
       name: "UnauthorizedError",
       code: 401,
       message: "No authentication token provided",
     });
-  } //end of if token
+  }
 
-  //Split bearerheader to get token
   try {
     const data = await decodeJwt(token);
+    req.decodedJwt = data;
     next();
   } catch (error) {
-    throw throwError({
+    throw errors.throwError({
       name: "UnauthorizedError",
       code: 401,
       message: "Unable to authenticate token",

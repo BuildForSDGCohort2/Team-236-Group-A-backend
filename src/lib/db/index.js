@@ -10,6 +10,7 @@ const connectDb = () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     })
     .then(() => {
       logger().info("db connected successfully");

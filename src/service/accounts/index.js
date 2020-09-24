@@ -1,15 +1,10 @@
 "use strict";
-
-const { sanitize } = require("../../lib/utils");
-
-const AccountModel = require("../../model/accounts")();
-
-async function getAccounts(role) {
-  const query = role ? { role } : {};
-  const accounts = await AccountModel.find({ query });
-  return sanitize(accounts, "_id", "password", "__v");
-}
+const getAccounts = require("./get-accounts");
+const assignRole = require("./assign-role");
+const getAccount = require("./get-account");
 
 module.exports = {
   getAccounts,
+  assignRole,
+  getAccount,
 };
