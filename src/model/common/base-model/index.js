@@ -49,6 +49,11 @@ const update = (Model) => async ({ query, data }) => {
   const item = await doc.exec();
   return item ? item.toObject() : item;
 };
+
+const deleteOne = (Model) => async ({query}) =>{
+  const doc = Model.deleteOne(query)
+  return doc.exec()
+}
 /**
  *
  * Create base model
@@ -73,9 +78,14 @@ const BaseModel = (Model) => {
     findAll: findAll(Model),
 
     /**
-     * update a model
+     * update a document
      */
     update: update(Model),
+        /**
+     * delete  a document
+     */
+
+    deleteOne:deleteOne(Model)
   };
 };
 
