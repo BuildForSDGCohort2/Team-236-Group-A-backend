@@ -3,7 +3,7 @@ const joi = require("joi");
 
 const classificationSchema = joi.object({
   label: joi.string().required(),
-  intent: joi.number().required(),
+  confidence_level: joi.number().required(),
 });
 
 const addClassificationSchema = joi.object({

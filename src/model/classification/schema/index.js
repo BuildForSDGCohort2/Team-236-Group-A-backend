@@ -7,7 +7,7 @@ const classificationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  intent: {
+  confidence_level: {
     type: Number,
     required: true,
   },
